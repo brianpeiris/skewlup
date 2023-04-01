@@ -33,7 +33,5 @@ export async function getSummary(text: string) {
 }
 
 export async function getTranslation(text: string, lang: string) {
-  return getResponse(
-    `Translate the following to ${lang}. \n --- \n ${text}`
-  );
+  return getResponse(`Translate the following to ${lang}. \n --- \n ${text}`);
 }
