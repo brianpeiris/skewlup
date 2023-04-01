@@ -15,12 +15,13 @@ export async function search(query: string): Promise<string[]> {
   url.searchParams.set("q", query);
 
   logger.debug("Requesting Bing search");
+  const startTime = Date.now();
   const results = await fetch(url, {
     headers: {
       "Ocp-Apim-Subscription-Key": BING_API_KEY,
     },
   }).then((r) => r.json());
-  logger.debug("Received Bing search");
+  logger.debug(`Received Bing search in ${Date.now() - startTime}ms`);
 
   return results.webPages.value.map((page: Result) => page.url);
 }

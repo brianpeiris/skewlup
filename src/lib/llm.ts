@@ -11,6 +11,7 @@ async function getResponse(prompt: string) {
   const truncatedPrompt = prompt.slice(0, 2048);
 
   logger.debug("Requesting OpenAI completion");
+  const startTime = Date.now();
   const completion = await openai.createChatCompletion({
     model: "gpt-3.5-turbo",
     messages: [
@@ -20,7 +21,7 @@ async function getResponse(prompt: string) {
       },
     ],
   });
-  logger.debug("Received OpenAI completion");
+  logger.debug(`Received OpenAI completion in ${Date.now() - startTime}ms`);
 
   return completion.data.choices[0].message?.content;
 }
