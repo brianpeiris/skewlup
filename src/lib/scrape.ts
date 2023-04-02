@@ -7,6 +7,9 @@ export async function getText(url: string) {
   const page = await browser.newPage();
 
   await page.goto(url, { waitUntil: "domcontentloaded" });
+  const title = await page.evaluate(() => {
+    return document.title;
+  });
   const text = await page.evaluate(() => {
     return document.body.innerText;
   });
@@ -14,5 +17,5 @@ export async function getText(url: string) {
   await browser.close();
   logger.debug("Got page text");
 
-  return text;
+  return {title, text};
 }

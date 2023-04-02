@@ -1,7 +1,10 @@
 {
   "private": true,
   "scripts": {
-    "main": "swc -d build src && node build/main.js"
+    "build": "swc -d build src",
+    "job-runner": "pnpm run build && node build/job-runner.js",
+    "main": "pnpm run build && node build/main.js",
+    "next-dev": "pnpm exec next dev"
   },
   "devDependencies": {
     "@swc/cli": "^0.1.62",
@@ -11,6 +14,7 @@
     "typescript": "5.0.3"
   },
   "dependencies": {
+    "bullmq": "^3.10.3",
     "dotenv": "^16.0.3",
     "lodash": "^4.17.21",
     "next": "^13.2.4",

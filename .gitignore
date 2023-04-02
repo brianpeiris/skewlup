@@ -1,6 +1,6 @@
 build
 node_modules/
 .env
-db
+db.sqlite
 .next/
 next-env.d.ts

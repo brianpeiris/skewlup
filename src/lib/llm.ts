@@ -1,3 +1,6 @@
+import dotenv from "dotenv";
+dotenv.config();
+
 import { Configuration, OpenAIApi } from "openai";
 import logger from "./logger";
 
