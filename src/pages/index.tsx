@@ -7,24 +7,34 @@ export default function Home({ resources }: { resources: ResourceView[] }) {
   return (
     <main>
       <h1>Resources</h1>
-      {resources.map((resource, i) => (
-        <components.Resource key={i} resource={resource} />
-      ))}
+      <div className="resources">
+        {resources.map((resource, i) => (
+          <components.Resource key={i} resource={resource} />
+        ))}
+      </div>
       <style global jsx>{`
         body {
           margin: 0;
           font-family: sans-serif;
           display: flex;
-          justify-content: center;
+        }
+        #__next {
+          width: 100%;
         }
       `}</style>
       <style jsx>{`
         h1 {
           text-align: center;
-          margin: 30px 0;
+          margin: 30px 0 20px 0;
         }
         main {
-          width: 800px;
+          width: 100%;
+        }
+        .resources {
+          display: flex;
+          flex-direction: row;
+          flex-wrap: wrap;
+          justify-content: center;
         }
       `}</style>
     </main>

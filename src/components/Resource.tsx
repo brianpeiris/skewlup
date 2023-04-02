@@ -14,11 +14,12 @@ export default function Resource({ resource }: { resource: ResourceView }) {
           margin: 0 0 10px 0;
         }
         .resource {
+          width: 600px;
           background: #f3f3f3;
           padding: 10px;
           border-radius: 10px;
           display: flex;
-          margin: 20px 0;
+          margin: 20px;
         }
         .info {
           flex: 1;
