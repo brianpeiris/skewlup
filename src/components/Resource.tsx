@@ -5,7 +5,9 @@ export default function Resource({ resource }: { resource: ResourceView }) {
     <div className="resource">
       <div className="info">
         <h2>{resource.title}</h2>
-        <a href={resource.url} target="_blank">{resource.url}</a>
+        <a href={resource.url} target="_blank">
+          {resource.url}
+        </a>
         <p>{resource.summary}</p>
         <div className="tags">
           {resource.tags.map((tag) => (

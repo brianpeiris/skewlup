@@ -13,8 +13,4 @@ const workers = {
   ResourceWorker,
 };
 
-export {
-  connection,
-  queues,
-  workers,
-};
+export { connection, queues, workers };

@@ -29,14 +29,15 @@ async function getResponse(prompt: string): Promise<string> {
   return completion.data.choices[0].message?.content;
 }
 
-export async function getSummary(text: string): Promise<{summary: string, tags: string[]}> {
+export async function getSummary(
+  text: string
+): Promise<{ summary: string; tags: string[] }> {
   const response = await getResponse(`
     Respond with json in the following format: {"summary": <summary>, "tags": [<tag1>, <tag2>, ...]}
     Summarize the following in less than 100 words and generate 5 tags that generally categorize the text. Each tag must be a single lowercase word.
     ---
-    ${text}`
-  );
-  logger.debug(`summary ${response}`)
+    ${text}`);
+  logger.debug(`summary ${response}`);
   return JSON.parse(response);
 }
 

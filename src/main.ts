@@ -7,7 +7,7 @@ import models from "./models";
 
 async function main() {
   console.log(models);
-  await sequelize.sync({force: true});
+  await sequelize.sync({ force: true });
   // const urls = await search("resources for women located in colombo");
   // await sleep(1);
   // const text = await getText(urls[0]);

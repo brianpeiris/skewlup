@@ -1,11 +1,13 @@
 export default function App({ children }) {
   return (
     <main>
-      <h1><a href="/">Resources</a></h1>
-      <a className="tags-link" href="/tags">Browse Tags</a>
-      <main>
-        {children}
-      </main>
+      <h1>
+        <a href="/">Resources</a>
+      </h1>
+      <a className="tags-link" href="/tags">
+        Browse Tags
+      </a>
+      <main>{children}</main>
       <style global jsx>{`
         body {
           margin: 0;
@@ -23,7 +25,7 @@ export default function App({ children }) {
         }
         h1 a {
           text-decoration: none;
-          color: black
+          color: black;
         }
         .tags-link {
           margin-bottom: 30px;
