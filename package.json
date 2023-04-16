@@ -3,7 +3,6 @@
   "scripts": {
     "build": "swc -d build src",
     "job-runner": "pnpm run build && node build/job-runner.js",
-    "main": "pnpm run build && node build/main.js",
     "next-dev": "pnpm exec next dev",
     "init-db": "pnpm run build && node build/scripts/init-db.js"
   },
