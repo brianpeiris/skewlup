@@ -3,7 +3,10 @@ import logger from "./logger";
 
 export async function getText(url: string) {
   logger.debug("Getting page text");
-  const browser = await puppeteer.launch();
+  const browser = await puppeteer.launch({
+    executablePath: "/usr/bin/google-chrome-stable",
+    args: ["--no-sandbox"],
+  });
   const page = await browser.newPage();
 
   await page.goto(url, { waitUntil: "domcontentloaded" });
@@ -17,5 +20,5 @@ export async function getText(url: string) {
   await browser.close();
   logger.debug("Got page text");
 
-  return {title, text};
+  return { title, text };
 }

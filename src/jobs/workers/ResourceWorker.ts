@@ -1,4 +1,5 @@
 import { Worker } from "bullmq";
+import connection from "../connection";
 import { getText } from "../../lib/scrape";
 import { getSummary, isPrimarySource } from "../../lib/llm";
 import logger from "../../lib/logger";
@@ -36,9 +37,9 @@ export default new Worker(
     });
 
     for (const tag of tags) {
-      await models.Tag.upsert({tag});
-      await models.Tag.increment("count", {where: {tag}});
+      await models.Tag.upsert({ tag });
+      await models.Tag.increment("count", { where: { tag } });
     }
   },
-  { limiter: { duration: 1000, max: 1 } }
+  { connection, limiter: { duration: 1000, max: 1 } }
 );

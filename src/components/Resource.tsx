@@ -9,7 +9,7 @@ export default function Resource({ resource }: { resource: ResourceView }) {
         <p>{resource.summary}</p>
         <div className="tags">
           {resource.tags.map((tag) => (
-            <a className="tag" href={`/tag/${tag}`}>
+            <a key={tag} className="tag" href={`/tag/${tag}`}>
               {tag}
             </a>
           ))}

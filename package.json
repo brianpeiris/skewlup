@@ -4,7 +4,8 @@
     "build": "swc -d build src",
     "job-runner": "pnpm run build && node build/job-runner.js",
     "main": "pnpm run build && node build/main.js",
-    "next-dev": "pnpm exec next dev"
+    "next-dev": "pnpm exec next dev",
+    "init-db": "pnpm run build && node build/scripts/init-db.js"
   },
   "devDependencies": {
     "@swc/cli": "^0.1.62",
@@ -20,7 +21,7 @@
     "next": "^13.2.4",
     "openai": "^3.2.1",
     "pg": "^8.10.0",
-    "puppeteer": "^19.8.0",
+    "puppeteer": "^19.9.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "sequelize": "^6.30.0",

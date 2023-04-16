@@ -4,3 +4,4 @@ node_modules/
 db.sqlite
 .next/
 next-env.d.ts
+.pnpm-store/

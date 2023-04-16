@@ -8,7 +8,7 @@ export default function Tags({ tags }: { tags: TagView[] }) {
     <components.App>
       <div className="tags">
         {tags.map((tag) => (
-          <a className="tag" href={`/tag/${tag.tag}`}>
+          <a key={tag.tag} className="tag" href={`/tag/${tag.tag}`}>
             {tag.tag} ({tag.count})
           </a>
         ))}

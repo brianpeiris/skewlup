@@ -1,5 +1,5 @@
 import { QueueEvents, QueueEventsListener } from "bullmq";
-import { queues } from "./jobs";
+import { connection, queues } from "./jobs";
 import logger from "./lib/logger";
 
 const events = [
@@ -11,9 +11,15 @@ const events = [
 ] as (keyof QueueEventsListener)[];
 
 for (const queue of Object.values(queues)) {
-  const queueEvents = new QueueEvents(queue.name);
+  const queueEvents = new QueueEvents(queue.name, { connection });
   for (const event of events) {
-    queueEvents.on(event, () => logger.debug(`${queue.name} - ${event}`));
+    queueEvents.on(event, (e: any) => {
+      if (e.failedReason) {
+        logger.debug(`${queue.name} - ${event} - ${e.failedReason}`);
+      } else {
+        logger.debug(`${queue.name} - ${event}`);
+      }
+    });
   }
 }
 

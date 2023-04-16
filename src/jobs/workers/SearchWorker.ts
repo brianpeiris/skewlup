@@ -1,4 +1,5 @@
 import { Worker } from "bullmq";
+import connection from "../connection";
 import { search } from "../../lib/search";
 import { queues } from "../index";
 import logger from "../../lib/logger";
@@ -13,5 +14,5 @@ export default new Worker(
       queues.resource.add("resource", { query, url });
     }
   },
-  { limiter: { duration: 1000, max: 1 } }
+  { connection, limiter: { duration: 1000, max: 1 } }
 );

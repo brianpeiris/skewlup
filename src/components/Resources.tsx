@@ -12,8 +12,8 @@ export default function Resources({
   return (
     <>
       <div className="resources">
-        {resources.map((resource, i) => (
-          <components.Resource key={i} resource={resource} />
+        {resources.map((resource) => (
+          <components.Resource key={resource.id} resource={resource} />
         ))}
       </div>
       <style jsx>{`
