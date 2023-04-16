@@ -5,8 +5,15 @@ export default function Resource({ resource }: { resource: ResourceView }) {
     <div className="resource">
       <div className="info">
         <h2>{resource.title}</h2>
-        <a href={resource.url}>{resource.url}</a>
+        <a href={resource.url} target="_blank">{resource.url}</a>
         <p>{resource.summary}</p>
+        <div className="tags">
+          {resource.tags.map((tag) => (
+            <a className="tag" href={`/tag/${tag}`}>
+              {tag}
+            </a>
+          ))}
+        </div>
       </div>
       <img src={resource.thumbnail} />
       <style jsx>{`
@@ -20,9 +27,17 @@ export default function Resource({ resource }: { resource: ResourceView }) {
           border-radius: 10px;
           display: flex;
           margin: 20px;
+          margin-top: 0;
         }
         .info {
           flex: 1;
+        }
+        .tags {
+          display: flex;
+          gap: 5px;
+        }
+        .tags a {
+          color: #333;
         }
         img {
           border-radius: 5px;

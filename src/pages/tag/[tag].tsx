@@ -1,9 +1,10 @@
-import components from "../components";
-import models from "../models";
-import { ResourceView } from "../lib/interfaces";
+import components from "../../components";
+import models from "../../models";
+import { ResourceView } from "../../lib/interfaces";
+import { Op } from "sequelize";
 import _ from "lodash";
 
-export default function Home({ resources }: { resources: ResourceView[] }) {
+export default function Tag({ resources }: { resources: ResourceView[] }) {
   return (
     <components.App>
       <components.Resources resources={resources} />
@@ -11,8 +12,9 @@ export default function Home({ resources }: { resources: ResourceView[] }) {
   );
 }
 
-export async function getServerSideProps() {
+export async function getServerSideProps({ params: { tag } }) {
   const resources = await models.Resource.findAll({
+    where: { tags: { [Op.contains]: tag } },
     order: [["createdAt", "DESC"]],
   });
   return {

@@ -1,6 +1,7 @@
 import { Worker } from "bullmq";
 import { getText } from "../../lib/scrape";
-import { getSummary } from "../../lib/llm";
+import { getSummary, isPrimarySource } from "../../lib/llm";
+import logger from "../../lib/logger";
 import models from "../../models";
 
 function sleep(seconds: number) {
@@ -10,17 +11,34 @@ function sleep(seconds: number) {
 export default new Worker(
   "resource",
   async (job) => {
-    const { url } = job.data;
+    const { query, url } = job.data;
+
+    const alreadyExists = (await models.Resource.count({ where: { url } })) > 0;
+    if (alreadyExists) return;
 
     const { title, text } = await getText(url);
+
     await sleep(1);
-    const summary = await getSummary(text);
+    const primarySource = await isPrimarySource(text, query);
+    logger.debug(
+      `${title} at ${url} is primary source for ${query}? ${primarySource}`
+    );
+    if (!primarySource) return;
+
+    await sleep(1);
+    const { summary, tags } = await getSummary(text);
 
     await models.Resource.create({
       title,
       url,
       summary,
+      tags,
     });
+
+    for (const tag of tags) {
+      await models.Tag.upsert({tag});
+      await models.Tag.increment("count", {where: {tag}});
+    }
   },
   { limiter: { duration: 1000, max: 1 } }
 );

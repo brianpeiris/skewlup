@@ -5,6 +5,7 @@ import logger from "./lib/logger";
 const events = [
   "added",
   "completed",
+  "drained",
   "failed",
   "error",
 ] as (keyof QueueEventsListener)[];
@@ -16,4 +17,5 @@ for (const queue of Object.values(queues)) {
   }
 }
 
-queues.search.add("search", { query: "piano lessons in toronto" });
+const query = process.argv.slice(2).join(" ");
+queues.search.add("search", { query });
