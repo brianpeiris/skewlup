@@ -7,11 +7,11 @@ import logger from "../../lib/logger";
 export default new Worker(
   "search",
   async (job) => {
-    const { query } = job.data;
+    const { country, query } = job.data;
     const urls = await search(query);
     logger.debug(`Got ${urls.length} urls`);
     for (const url of urls) {
-      queues.resource.add("resource", { query, url });
+      queues.resource.add("resource", { country, query, url });
     }
   },
   { connection, limiter: { duration: 1000, max: 1 } }

@@ -1,6 +1,8 @@
+import { useRouter } from 'next/router';
 import { ResourceView } from "../lib/interfaces";
 
 export default function Resource({ resource }: { resource: ResourceView }) {
+  const { country } = useRouter().query;
   return (
     <div className="resource">
       <div className="info">
@@ -11,7 +13,7 @@ export default function Resource({ resource }: { resource: ResourceView }) {
         <p>{resource.summary}</p>
         <div className="tags">
           {resource.tags.map((tag) => (
-            <a key={tag} className="tag" href={`/tag/${tag}`}>
+            <a key={tag} className="tag" href={`/${country}/tag/${tag}`}>
               {tag}
             </a>
           ))}

@@ -1,3 +1,8 @@
+export interface CountryView {
+  id: number;
+  name: string;
+}
+
 export interface ResourceView {
   title: string;
   url: string;

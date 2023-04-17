@@ -1,8 +1,5 @@
 import components from "../components";
-import models from "../../models";
 import { ResourceView } from "../../lib/interfaces";
-import { Op } from "sequelize";
-import _ from "lodash";
 
 export default function Resources({
   resources,

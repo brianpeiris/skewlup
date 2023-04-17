@@ -1,6 +1,7 @@
 import { QueueEvents, QueueEventsListener } from "bullmq";
-import { connection, queues } from "./jobs";
-import logger from "./lib/logger";
+import { connection, queues } from "../jobs";
+import models from "../models";
+import logger from "../lib/logger";
 
 const events = [
   "added",
@@ -23,5 +24,6 @@ for (const queue of Object.values(queues)) {
   }
 }
 
-const query = process.argv.slice(2).join(" ");
-queues.search.add("search", { query });
+const country = process.argv[2];
+const query = process.argv.slice(3).join(" ");
+queues.search.add("search", { country, query });

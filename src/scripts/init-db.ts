@@ -2,4 +2,9 @@ import sequelize from "../lib/db";
 import models from "../models";
 
 console.log(models);
-sequelize.sync({ force: true });
+
+if (process.argv[2] === "-f") {
+  sequelize.sync({ force: true });
+} else {
+  sequelize.sync({ alter: { drop: false } });
+}
