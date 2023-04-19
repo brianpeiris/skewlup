@@ -14,12 +14,13 @@ const events = [
 for (const queue of Object.values(queues)) {
   const queueEvents = new QueueEvents(queue.name, { connection });
   for (const event of events) {
-    queueEvents.on(event, (e: any) => {
+    queueEvents.on(event, async (e: any) => {
       if (e.failedReason) {
         logger.debug(`${queue.name} - ${event} - ${e.failedReason}`);
       } else {
         logger.debug(`${queue.name} - ${event}`);
       }
+      logger.debug(`${queue.name} - ${JSON.stringify(await queue.getJobCounts())}`);
     });
   }
 }
