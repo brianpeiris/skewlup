@@ -41,15 +41,15 @@ export async function getSummary(
   return JSON.parse(response);
 }
 
-export async function isPrimarySource(text: string, query: string) {
+export async function isValidProvider(text: string, query: string) {
   const response = await getResponse(`
-    Respond with json in the following format: {"reasoning": <reasoning>, "isProvider": <boolean>}
+    Respond with json in the following format: {"reasoning": <reasoning>, "isValidProvider": <boolean>}
     Based on the following text from a website, does this website provide ${query}?
-    If the website is a review site, a blog, a news article, or a list article, it is not a provider.
-    If the provider is not located in the specified city, it does not qualify.
+    If the website is a review site, a blog, a news article, or a list article, it is not a valid provider.
+    If the provider is not located in the specified city, it is not a valid provider.
     --- 
     ${text}
   `);
-  logger.debug(`isPrimarySource\n${response}`);
+  logger.debug(`isValidProvider\n${response}`);
   return JSON.parse(response).isProvider;
 }

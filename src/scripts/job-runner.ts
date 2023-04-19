@@ -2,6 +2,7 @@ import { QueueEvents, QueueEventsListener } from "bullmq";
 import { connection, queues } from "../jobs";
 import models from "../models";
 import logger from "../lib/logger";
+import { friendlyName } from "../lib/names";
 
 const events = [
   "added",
@@ -20,12 +21,18 @@ for (const queue of Object.values(queues)) {
       } else {
         logger.debug(`${queue.name} - ${event}`);
       }
-      logger.debug(`${queue.name} - ${JSON.stringify(await queue.getJobCounts())}`);
+      logger.debug(
+        `${queue.name} - ${JSON.stringify(await queue.getJobCounts())}`
+      );
     });
   }
 }
 
 const country = process.argv[2];
 const city = process.argv[3];
-const query = process.argv.slice(4).join(" ");
-queues.search.add("search", { country, city, query });
+const topic = process.argv.slice(4).join(" ");
+queues.search.add("search", {
+  country,
+  city,
+  query: `${topic} located in ${friendlyName(city)} ${friendlyName(country)}`,
+});

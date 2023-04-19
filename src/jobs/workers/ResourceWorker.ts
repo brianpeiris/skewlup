@@ -1,7 +1,7 @@
 import { Worker } from "bullmq";
 import connection from "../connection";
 import { getText } from "../../lib/scrape";
-import { getSummary, isPrimarySource } from "../../lib/llm";
+import { getSummary, isValidProvider } from "../../lib/llm";
 import logger from "../../lib/logger";
 import models from "../../models";
 
@@ -29,7 +29,7 @@ export default new Worker(
     const { title, text } = await getText(url);
 
     await sleep(1);
-    const primarySource = await isPrimarySource(text, query);
+    const primarySource = await isValidProvider(text, query);
     logger.debug(
       `${title} at ${url} is primary source for ${query}? ${primarySource}`
     );
