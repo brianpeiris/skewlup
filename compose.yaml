@@ -3,7 +3,7 @@ services:
     image: redis:7
   postgres:
     environment:
-        - POSTGRES_DB=cardinal
+        - POSTGRES_DB=skewlup
         - POSTGRES_PASSWORD=password
     image: postgres:15
   app:
