@@ -1,38 +1,31 @@
+import { useRouter } from "next/router";
 import components from "../../components";
 import models from "../../models";
-import { ResourceView, TagView } from "../../lib/interfaces";
-import { Op } from "sequelize";
-import { omitDates } from "../../lib/props";
+import { CityView } from "../../lib/interfaces";
+import { friendlyName } from "../../lib/names";
 import _ from "lodash";
 
-export default function Country({ tags, resources }: { tags: TagView[], resources: ResourceView[] }) {
+export default function Country({ cities }: { cities: CityView[] }) {
+  const { country } = useRouter().query;
   return (
     <components.App>
-      <components.Tags tags={tags} />
-      <components.Resources resources={resources} />
+      {cities.map((city) => (
+        <a href={`/${country}/${city.name}`}>{friendlyName(city.name)}</a>
+      ))}
     </components.App>
   );
 }
 
-export async function getServerSideProps({ params: { country } }) {
-  const tags = await models.Tag.findAll({
-    include: [{ model: models.Country, attributes: [] }],
-    where: {
-      "$Country.name$": { [Op.eq]: country },
-    },
-    order: [["count", "DESC"]],
-  });
-  const resources = await models.Resource.findAll({
-    include: [{ model: models.Country, attributes: [] }],
-    where: {
-      "$Country.name$": { [Op.eq]: country },
-    },
+export async function getServerSideProps() {
+  const cities = await models.City.findAll({
+    include: [{model: models.Country,  attributes: []}],
     order: [["createdAt", "DESC"]],
   });
   return {
     props: {
-      tags: omitDates(tags),
-      resources: omitDates(resources),
+      cities: cities.map((r: any) =>
+        _.omit(r.toJSON(), ["createdAt", "updatedAt"])
+      ),
     },
   };
 }

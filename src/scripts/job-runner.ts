@@ -25,5 +25,6 @@ for (const queue of Object.values(queues)) {
 }
 
 const country = process.argv[2];
-const query = process.argv.slice(3).join(" ");
-queues.search.add("search", { country, query });
+const city = process.argv[3];
+const query = process.argv.slice(4).join(" ");
+queues.search.add("search", { country, city, query });

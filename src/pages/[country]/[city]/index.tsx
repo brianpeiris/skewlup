@@ -3,8 +3,9 @@ import models from "../../../models";
 import { ResourceView, TagView } from "../../../lib/interfaces";
 import { Op } from "sequelize";
 import { omitDates } from "../../../lib/props";
+import _ from "lodash";
 
-export default function Tag({
+export default function Country({
   tags,
   resources,
 }: {
@@ -19,19 +20,32 @@ export default function Tag({
   );
 }
 
-export async function getServerSideProps({ params: { country, tag } }) {
+export async function getServerSideProps({ params: { country, city } }) {
   const tags = await models.Tag.findAll({
-    include: [{ model: models.Country, attributes: [] }],
+    include: [
+      {
+        model: models.City,
+        attributes: [],
+        include: [{ model: models.Country, attributes: [] }],
+      },
+    ],
     where: {
-      "$Country.name$": { [Op.eq]: country },
+      "$City.Country.name$": { [Op.eq]: country },
+      "$City.name$": { [Op.eq]: city },
     },
     order: [["count", "DESC"]],
   });
   const resources = await models.Resource.findAll({
-    include: [{ model: models.Country, attributes: [] }],
+    include: [
+      {
+        model: models.City,
+        attributes: [],
+        include: [{ model: models.Country, attributes: [] }],
+      },
+    ],
     where: {
-      "$Country.name$": { [Op.eq]: country },
-      tags: { [Op.contains]: tag },
+      "$City.Country.name$": { [Op.eq]: country },
+      "$City.name$": { [Op.eq]: city },
     },
     order: [["createdAt", "DESC"]],
   });

@@ -5,7 +5,7 @@
     "next-dev": "pnpm exec next dev",
     "job-runner": "pnpm run build && node build/scripts/job-runner.js",
     "init-db": "pnpm run build && node build/scripts/init-db.js",
-    "add-country": "pnpm run build && node build/scripts/add-country.js"
+    "add-place": "pnpm run build && node build/scripts/add-place.js"
   },
   "devDependencies": {
     "@swc/cli": "^0.1.62",

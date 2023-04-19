@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { friendlyName } from "../lib/country";
+import { friendlyName } from "../lib/names";
 
 export default function App({ children }) {
   const { query, asPath } = useRouter();
@@ -10,16 +10,22 @@ export default function App({ children }) {
       link: `/${query.country}`,
     });
   }
+  if (query.city) {
+    breadcrumbs.push({
+      text: friendlyName(query.city as string),
+      link: `/${query.country}/${query.city}`,
+    });
+  }
   if (query.tag || asPath.endsWith("/tags")) {
     breadcrumbs.push({
       text: "tags",
-      link: `/${query.country}/tags`,
+      link: `/${query.country}/${query.city}/tags`,
     });
   }
   if (query.tag) {
     breadcrumbs.push({
       text: query.tag as string,
-      link: `/${query.country}/tag/${query.tag}`,
+      link: `/${query.country}/${query.city}/tag/${query.tag}`,
     });
   }
 

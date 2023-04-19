@@ -3,6 +3,11 @@ export interface CountryView {
   name: string;
 }
 
+export interface CityView {
+  id: number;
+  name: string;
+}
+
 export interface ResourceView {
   title: string;
   url: string;

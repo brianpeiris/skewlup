@@ -1,7 +1,7 @@
 import components from "../components";
 import models from "../models";
 import { CountryView } from "../lib/interfaces";
-import { friendlyName } from "../lib/country";
+import { friendlyName } from "../lib/names";
 import _ from "lodash";
 
 export default function Home({ countries }: { countries: CountryView[] }) {

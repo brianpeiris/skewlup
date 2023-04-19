@@ -1,17 +1,17 @@
 import { useRouter } from "next/router";
-import components from "../../components";
-import models from "../../models";
-import { TagView } from "../../lib/interfaces";
+import components from "../../../components";
+import models from "../../../models";
+import { TagView } from "../../../lib/interfaces";
 import { Op } from "sequelize";
 import _ from "lodash";
 
 export default function Tags({ tags }: { tags: TagView[] }) {
-  const { country } = useRouter().query;
+  const { country, city } = useRouter().query;
   return (
     <components.App>
       <div className="tags">
         {tags.map((tag) => (
-          <a key={tag.tag} className="tag" href={`/${country}/tag/${tag.tag}`}>
+          <a key={tag.tag} className="tag" href={`/${country}/${city}/tag/${tag.tag}`}>
             {tag.tag} ({tag.count})
           </a>
         ))}
@@ -29,11 +29,18 @@ export default function Tags({ tags }: { tags: TagView[] }) {
   );
 }
 
-export async function getServerSideProps({ params: { country } }) {
+export async function getServerSideProps({ params: { country, city } }) {
   const tags = await models.Tag.findAll({
-    include: [{ model: models.Country, attributes: [] }],
+    include: [
+      {
+        model: models.City,
+        attributes: [],
+        include: [{ model: models.Country, attributes: [] }],
+      },
+    ],
     where: {
-      "$Country.name$": { [Op.eq]: country },
+      "$City.Country.name$": { [Op.eq]: country },
+      "$City.name$": { [Op.eq]: city },
     },
     order: [["count", "DESC"]],
   });

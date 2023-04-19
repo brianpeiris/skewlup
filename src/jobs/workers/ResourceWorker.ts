@@ -4,7 +4,6 @@ import { getText } from "../../lib/scrape";
 import { getSummary, isPrimarySource } from "../../lib/llm";
 import logger from "../../lib/logger";
 import models from "../../models";
-import * as interfaces from "../../lib/interfaces";
 
 function sleep(seconds: number) {
   return new Promise((resolve) => setTimeout(resolve, seconds * 1000));
@@ -13,15 +12,18 @@ function sleep(seconds: number) {
 export default new Worker(
   "resource",
   async (job) => {
-    const { country: countryName, query, url } = job.data;
+    const { country: countryName, city: cityName, query, url } = job.data;
 
-    const country = await models.Country.findOne({
-      where: { name: countryName },
+    const city = await models.City.findOne({
+      include: [{ model: models.Country, attributes: [] }],
+      where: {
+        name: cityName,
+        "$Country.name$": countryName,
+      },
     });
 
     const alreadyExists =
-      (await models.Resource.count({ where: { CountryId: country.id, url } })) >
-      0;
+      (await models.Resource.count({ where: { CityId: city.id, url } })) > 0;
     if (alreadyExists) return;
 
     const { title, text } = await getText(url);
@@ -37,7 +39,7 @@ export default new Worker(
     const { summary, tags } = await getSummary(text);
 
     await models.Resource.create({
-      CountryId: country.id,
+      CityId: city.id,
       title,
       url,
       summary,
@@ -45,13 +47,11 @@ export default new Worker(
     });
 
     for (const tag of tags) {
-      if (
-        !(await models.Tag.findOne({ where: { CountryId: country.id, tag } }))
-      ) {
-        await models.Tag.create({ CountryId: country.id, tag });
+      if (!(await models.Tag.findOne({ where: { CityId: city.id, tag } }))) {
+        await models.Tag.create({ CityId: city.id, tag });
       }
       await models.Tag.increment("count", {
-        where: { CountryId: country.id, tag },
+        where: { CityId: city.id, tag },
       });
     }
   },

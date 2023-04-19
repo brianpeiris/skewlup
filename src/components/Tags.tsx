@@ -6,14 +6,14 @@ export default function Tags({
 }: {
   tags: TagView[];
 }) {
-  const { country } = useRouter().query;
+  const { country, city } = useRouter().query;
   return (
     <>
       <div className="tags">
         {tags.filter(tag => tag.count > 1).map((tag) => (
-          <a key={tag.tag} href={`/${country}/tag/${tag.tag}`}>{tag.tag} ({tag.count})</a>
+          <a key={tag.tag} href={`/${country}/${city}/tag/${tag.tag}`}>{tag.tag} ({tag.count})</a>
         ))}
-        <a href={`/${country}/tags`}>more tags</a>
+        <a href={`/${country}/${city}/tags`}>more tags</a>
       </div>
       <style jsx>{`
         .tags {
