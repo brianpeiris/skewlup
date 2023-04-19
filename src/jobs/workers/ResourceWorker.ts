@@ -38,15 +38,19 @@ export default new Worker(
     await sleep(1);
     const { summary, tags } = await getSummary(text);
 
+    const cleanTags = tags.map((tag) =>
+      tag.toLowerCase().replace(/[^a-z0-9]/g, "-")
+    );
+
     await models.Resource.create({
       CityId: city.id,
       title,
       url,
       summary,
-      tags,
+      cleanTags,
     });
 
-    for (const tag of tags) {
+    for (const tag of cleanTags) {
       if (!(await models.Tag.findOne({ where: { CityId: city.id, tag } }))) {
         await models.Tag.create({ CityId: city.id, tag });
       }

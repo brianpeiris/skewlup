@@ -41,14 +41,12 @@ export async function getSummary(
   return JSON.parse(response);
 }
 
-export async function getTranslation(text: string, lang: string) {
-  return getResponse(`Translate the following to ${lang}. \n --- \n ${text}`);
-}
-
 export async function isPrimarySource(text: string, query: string) {
   const response = await getResponse(`
     Respond with json in the following format: {"reasoning": <reasoning>, "isProvider": <boolean>}
-    Based on the following text from a website, does this website provide ${query}? If the website is a review site, a blog, a news article, or a list article, it is not a provider.
+    Based on the following text from a website, does this website provide ${query}?
+    If the website is a review site, a blog, a news article, or a list article, it is not a provider.
+    If the provider is not located in the specified city, it does not qualify.
     --- 
     ${text}
   `);
