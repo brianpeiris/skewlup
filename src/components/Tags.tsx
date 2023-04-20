@@ -21,8 +21,9 @@ export default function Tags({
           flex-direction: row;
           flex-wrap: wrap;
           justify-content: center;
-          gap: 10px;
+          gap: 8px;
           margin-bottom: 30px;
+          padding: 0 8px;
         }
       `}</style>
     </>

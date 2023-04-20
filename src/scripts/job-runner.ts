@@ -1,6 +1,5 @@
 import { QueueEvents, QueueEventsListener } from "bullmq";
 import { connection, queues } from "../jobs";
-import models from "../models";
 import logger from "../lib/logger";
 import { friendlyName } from "../lib/names";
 

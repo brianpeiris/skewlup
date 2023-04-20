@@ -3,6 +3,7 @@ import components from "../../components";
 import models from "../../models";
 import { CityView } from "../../lib/interfaces";
 import { friendlyName } from "../../lib/names";
+import { Op } from "sequelize";
 import _ from "lodash";
 
 export default function Country({ cities }: { cities: CityView[] }) {
@@ -16,9 +17,12 @@ export default function Country({ cities }: { cities: CityView[] }) {
   );
 }
 
-export async function getServerSideProps() {
+export async function getServerSideProps({ params: { country } }) {
   const cities = await models.City.findAll({
     include: [{model: models.Country,  attributes: []}],
+    where: {
+      "$Country.name$": { [Op.eq]: country },
+    },
     order: [["createdAt", "DESC"]],
   });
   return {

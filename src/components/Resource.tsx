@@ -1,50 +1,71 @@
-import { useRouter } from 'next/router';
+import { useRouter } from "next/router";
 import { ResourceView } from "../lib/interfaces";
 
 export default function Resource({ resource }: { resource: ResourceView }) {
   const { country, city } = useRouter().query;
   return (
     <div className="resource">
-      <div className="info">
-        <h2>{resource.title}</h2>
-        <a href={resource.url} target="_blank">
-          {resource.url}
-        </a>
-        <p>{resource.summary}</p>
-        <div className="tags">
-          {resource.tags.map((tag) => (
-            <a key={tag} className="tag" href={`/${country}/${city}/tag/${tag}`}>
-              {tag}
-            </a>
-          ))}
-        </div>
+      <h2>{resource.title}</h2>
+      <a className="url" href={resource.url} target="_blank">
+        {resource.url.replace(/https?:\/\//, "").replace(/\/$/, "")}
+      </a>
+      <div className="content">
+        <span>{resource.summary}</span>
+        <img src={resource.thumbnail} />
       </div>
-      <img src={resource.thumbnail} />
+      <div className="tags">
+        {resource.tags.map((tag) => (
+          <a key={tag} className="tag" href={`/${country}/${city}/tag/${tag}`}>
+            {tag}
+          </a>
+        ))}
+      </div>
       <style jsx>{`
         h2 {
+          font-size: 20px;
           margin: 0 0 10px 0;
         }
         .resource {
           width: 600px;
+          max-width: 80vw;
           background: #f3f3f3;
           padding: 10px;
           border-radius: 10px;
           display: flex;
           margin: 20px;
           margin-top: 0;
+          display: flex;
+          flex-direction: column;
         }
-        .info {
-          flex: 1;
+        .url {
+          font-size: 14px;
         }
         .tags {
+          margin-top: 10px;
           display: flex;
           gap: 5px;
+          flex: 1;
+          align-items: end;
         }
         .tags a {
-          color: #333;
+          color: #555;
+        }
+        .content {
+          display: flex;
+          gap: 10px;
+          margin-top: 10px;
+          justify-content: flex-start;
         }
         img {
           border-radius: 5px;
+          width: 200px;
+          height: 150px;
+        }
+        @media (max-width: 600px) {
+          img {
+            width: 100px;
+            height: 75px;
+          }
         }
       `}</style>
     </div>

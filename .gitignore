@@ -5,3 +5,4 @@ db.sqlite
 .next/
 next-env.d.ts
 .pnpm-store/
+public/thumbnails/

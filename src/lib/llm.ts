@@ -51,5 +51,5 @@ export async function isValidProvider(text: string, query: string) {
     ${text}
   `);
   logger.debug(`isValidProvider\n${response}`);
-  return JSON.parse(response).isProvider;
+  return JSON.parse(response).isValidProvider;
 }

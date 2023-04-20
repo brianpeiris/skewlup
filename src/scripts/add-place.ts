@@ -8,5 +8,6 @@ const cityName = process.argv[3];
     where: { name: countryName },
     defaults: { name: countryName },
   });
-  models.City.create({ CountryId: country.id, name: cityName });
+  await models.City.create({ CountryId: country.id, name: cityName });
+  process.exit();
 })();

@@ -1,6 +1,6 @@
 import { Worker } from "bullmq";
 import connection from "../connection";
-import { getText } from "../../lib/scrape";
+import { getText, saveThumbnail } from "../../lib/scrape";
 import { getSummary, isValidProvider } from "../../lib/llm";
 import logger from "../../lib/logger";
 import models from "../../models";
@@ -29,11 +29,13 @@ export default new Worker(
     const { title, text } = await getText(url);
 
     await sleep(1);
-    const primarySource = await isValidProvider(text, query);
+    const validProvider = await isValidProvider(text, query);
     logger.debug(
-      `${title} at ${url} is primary source for ${query}? ${primarySource}`
+      `${title} at ${url} is primary source for ${query}? ${validProvider}`
     );
-    if (!primarySource) return;
+    if (!validProvider) return;
+
+    const thumbnail = await saveThumbnail(url);
 
     await sleep(1);
     const { summary, tags } = await getSummary(text);
@@ -47,7 +49,8 @@ export default new Worker(
       title,
       url,
       summary,
-      cleanTags,
+      thumbnail,
+      tags: cleanTags,
     });
 
     for (const tag of cleanTags) {
