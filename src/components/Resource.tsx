@@ -39,6 +39,7 @@ export default function Resource({ resource }: { resource: ResourceView }) {
         }
         .url {
           font-size: 14px;
+          word-break: break-all;
         }
         .tags {
           margin-top: 10px;
