@@ -6,3 +6,8 @@ db.sqlite
 next-env.d.ts
 .pnpm-store/
 public/thumbnails/
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
