@@ -60,6 +60,7 @@ export default function Resource({ resource }: { resource: ResourceView }) {
           border-radius: 5px;
           width: 200px;
           height: 150px;
+          object-fit: contain;
         }
         @media (max-width: 600px) {
           img {

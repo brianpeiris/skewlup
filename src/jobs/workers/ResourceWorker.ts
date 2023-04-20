@@ -40,9 +40,9 @@ export default new Worker(
     await sleep(1);
     const { summary, tags } = await getSummary(text);
 
-    const cleanTags = tags.map((tag) =>
-      tag.toLowerCase().replace(/[^a-z0-9]/g, "-")
-    );
+    const cleanTags = tags
+      .map((tag) => tag.toLowerCase().replace(/[^a-z0-9]/g, "-"))
+      .filter((tag) => ![countryName, cityName].includes(tag));
 
     await models.Resource.create({
       CityId: city.id,
