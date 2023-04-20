@@ -2,6 +2,7 @@ import { QueueEvents, QueueEventsListener } from "bullmq";
 import { connection, queues } from "../jobs";
 import logger from "../lib/logger";
 import { friendlyName } from "../lib/names";
+import { readFileSync } from "fs";
 
 const events = [
   "added",
@@ -27,11 +28,26 @@ for (const queue of Object.values(queues)) {
   }
 }
 
-const country = process.argv[2];
-const city = process.argv[3];
-const topic = process.argv.slice(4).join(" ");
-queues.search.add("search", {
-  country,
-  city,
-  query: `${topic} located in ${friendlyName(city)} ${friendlyName(country)}`,
-});
+const firstArg = process.argv[2];
+
+if (firstArg.endsWith(".txt")) {
+  const entries = readFileSync(firstArg, { encoding: "utf8" }).trim().split("\n");
+  for (const entry of entries) {
+    const [country, city, ...rest] = entry.split(" ");
+    const topic = rest.join(" ");
+    addSearch(country, city, topic);
+  }
+} else {
+  const country = firstArg;
+  const city = process.argv[3];
+  const topic = process.argv.slice(4).join(" ");
+  addSearch(country, city, topic);
+}
+
+function addSearch(country, city, topic) {
+  queues.search.add("search", {
+    country,
+    city,
+    query: `${topic} located in ${friendlyName(city)} ${friendlyName(country)}`,
+  });
+}
