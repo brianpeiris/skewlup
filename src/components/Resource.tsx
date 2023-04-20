@@ -28,11 +28,11 @@ export default function Resource({ resource }: { resource: ResourceView }) {
         .resource {
           width: 600px;
           max-width: 80vw;
-          background: #f3f3f3;
+          background: var(--secondary-background);
           padding: 10px;
           border-radius: 10px;
           display: flex;
-          margin: 20px;
+          margin: 40px 20px;
           margin-top: 0;
           display: flex;
           flex-direction: column;
@@ -48,7 +48,7 @@ export default function Resource({ resource }: { resource: ResourceView }) {
           align-items: end;
         }
         .tags a {
-          color: #555;
+          color: var(--secondary-text);
         }
         .content {
           display: flex;
@@ -63,6 +63,9 @@ export default function Resource({ resource }: { resource: ResourceView }) {
           object-fit: contain;
         }
         @media (max-width: 600px) {
+          .resource {
+            margin: 10px 0;
+          }
           img {
             width: 100px;
             height: 75px;

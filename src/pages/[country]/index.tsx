@@ -10,9 +10,7 @@ export default function Country({ cities }: { cities: CityView[] }) {
   const { country } = useRouter().query;
   return (
     <components.App>
-      {cities.map((city) => (
-        <a href={`/${country}/${city.name}`}>{friendlyName(city.name)}</a>
-      ))}
+      <components.Places places={cities} />
     </components.App>
   );
 }
@@ -27,8 +25,10 @@ export async function getServerSideProps({ params: { country } }) {
   });
   return {
     props: {
-      cities: cities.map((r: any) =>
-        _.omit(r.toJSON(), ["createdAt", "updatedAt"])
+      cities: cities.map((r: any) => ({
+        ..._.omit(r.toJSON(), ["createdAt", "updatedAt"]),
+        link: `/${country}/${r.name}`,
+      })
       ),
     },
   };

@@ -32,7 +32,10 @@ export default function App({ children }) {
   return (
     <main>
       <h1>
-        <a href="/">Resources</a>
+        <a href="/">
+          <img className="logo" src="/logo.svg" />
+          Skwelup
+        </a>
       </h1>
       <div className="breadcrumbs">
         {breadcrumbs.map((crumb, i) => (
@@ -44,10 +47,40 @@ export default function App({ children }) {
       </div>
       <main>{children}</main>
       <style global jsx>{`
+        :root {
+          --background: white;
+          --secondary-background: #f3f3f3;
+          --text: black;
+          --secondary-text: #555;
+          --link: blue;
+          --visited-link: purple;
+        }
+        @media (prefers-color-scheme: dark) {
+          :root {
+            --background: #111;
+            --secondary-background: #333;
+            --text: white;
+            --secondary-text: #aaa;
+            --link: #99dafb;
+            --visited-link: #72a2ba;
+          }
+        }
         body {
           margin: 0;
           font-family: sans-serif;
           display: flex;
+          color: var(--text);
+          background: var(--background);
+        }
+        .logo {
+          height: 50px;
+          margin-right: 10px;
+        }
+        a {
+          color: var(--link);
+        }
+        a:visited {
+          color: var(--visited-link);
         }
         #__next {
           width: 100%;
@@ -60,7 +93,9 @@ export default function App({ children }) {
         }
         h1 a {
           text-decoration: none;
-          color: black;
+          color: var(--text);
+          display: flex;
+          align-items: center;
         }
         .breadcrumbs {
           margin-bottom: 30px;
