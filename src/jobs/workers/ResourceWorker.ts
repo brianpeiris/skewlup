@@ -14,7 +14,7 @@ export default new Worker(
   async (job) => {
     const { country: countryName, city: cityName, query, url } = job.data;
 
-    const city = await models.City.findOne({
+    const city: any = await models.City.findOne({
       include: [{ model: models.Country, attributes: [] }],
       where: {
         name: cityName,

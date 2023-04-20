@@ -9,6 +9,7 @@ export interface CityView {
 }
 
 export interface ResourceView {
+  id: number;
   title: string;
   url: string;
   summary: string;

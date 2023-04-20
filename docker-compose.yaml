@@ -4,7 +4,7 @@ services:
   postgres:
     environment:
         - POSTGRES_DB=skewlup
-        - POSTGRES_PASSWORD=password
+        - POSTGRES_PASSWORD=${DB_PASSWORD}
     image: postgres:15
   app:
     build: .
@@ -12,5 +12,5 @@ services:
       - .:/app
     working_dir: /app
     ports:
-      - 3000:3000
-    command: ./scripts/start.sh
+      - ${PORT}:3000
+    command: ./scripts/start-${DEV_OR_PROD}.sh

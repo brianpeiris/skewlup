@@ -1,5 +1,5 @@
 import components from "../components";
-import { ResourceView } from "../../lib/interfaces";
+import { ResourceView } from "../lib/interfaces";
 
 export default function Resources({
   resources,

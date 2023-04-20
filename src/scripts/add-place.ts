@@ -4,7 +4,7 @@ const countryName = process.argv[2];
 const cityName = process.argv[3];
 
 (async () => {
-  const [country] = await models.Country.findOrCreate({
+  const [country]: any[] = await models.Country.findOrCreate({
     where: { name: countryName },
     defaults: { name: countryName },
   });

@@ -12,7 +12,7 @@ export default function Home({ countries }: { countries: CountryView[] }) {
 }
 
 export async function getServerSideProps() {
-  const countries = await models.Country.findAll({
+  const countries: any[] = await models.Country.findAll({
     order: [["createdAt", "DESC"]],
   });
   return {

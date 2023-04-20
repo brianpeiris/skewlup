@@ -2,6 +2,8 @@
   "private": true,
   "scripts": {
     "build": "swc -d build src",
+    "next-build": "pnpm exec next build",
+    "next-prod": "pnpm exec next start",
     "next-dev": "pnpm exec next dev",
     "job-runner": "pnpm run build && node build/scripts/job-runner.js",
     "init-db": "pnpm run build && node build/scripts/init-db.js",
