@@ -29,7 +29,7 @@ export default function Resource({ resource }: { resource: ResourceView }) {
           width: 600px;
           max-width: 80vw;
           background: var(--secondary-background);
-          padding: 10px;
+          padding: 15px;
           border-radius: 10px;
           display: flex;
           margin: 40px 20px;
@@ -59,7 +59,7 @@ export default function Resource({ resource }: { resource: ResourceView }) {
         img {
           border-radius: 5px;
           width: 200px;
-          height: 150px;
+          max-height: 150px;
           object-fit: contain;
         }
         @media (max-width: 600px) {
@@ -68,7 +68,7 @@ export default function Resource({ resource }: { resource: ResourceView }) {
           }
           img {
             width: 100px;
-            height: 75px;
+            max-height: 75px;
           }
         }
       `}</style>
