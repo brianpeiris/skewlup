@@ -2,7 +2,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 import { Configuration, OpenAIApi } from "openai";
-import logger from "./logger";
+import logger from "./logger.js";
 
 async function getResponse(prompt: string): Promise<string> {
   const OPENAI_API_KEY = process.env.OPENAI_API_KEY;

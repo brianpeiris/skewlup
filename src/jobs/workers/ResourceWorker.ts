@@ -1,9 +1,9 @@
 import { Worker } from "bullmq";
-import connection from "../connection";
-import { getText, saveThumbnail } from "../../lib/scrape";
-import { getSummary, isValidProvider } from "../../lib/llm";
-import logger from "../../lib/logger";
-import models from "../../models";
+import connection from "../connection.js";
+import { getText, saveThumbnail } from "../../lib/scrape.js";
+import { getSummary, isValidProvider } from "../../lib/llm.js";
+import logger from "../../lib/logger.js";
+import models from "../../models/index.js";
 
 function sleep(seconds: number) {
   return new Promise((resolve) => setTimeout(resolve, seconds * 1000));

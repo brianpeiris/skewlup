@@ -11,7 +11,9 @@ export default function Resource({ resource }: { resource: ResourceView }) {
       </a>
       <div className="content">
         <span>{resource.summary}</span>
-        <img src={resource.thumbnail} />
+        <div className="thumbnailContainer">
+          <img src={`/api/static/${resource.thumbnail}`} />
+        </div>
       </div>
       <div className="tags">
         {resource.tags.map((tag) => (
@@ -57,15 +59,23 @@ export default function Resource({ resource }: { resource: ResourceView }) {
           margin-top: 10px;
           justify-content: flex-start;
         }
+        .thumbnailContainer {
+          min-width: 200px;
+          display: flex;
+          justify-content: center;
+        }
         img {
           border-radius: 5px;
-          width: 200px;
           max-height: 150px;
+          max-width: 200px;
           object-fit: contain;
         }
         @media (max-width: 600px) {
           .resource {
             margin: 10px 0;
+          }
+          .thumbnailContainer {
+            min-width: 100px;
           }
           img {
             width: 100px;

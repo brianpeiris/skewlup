@@ -1,7 +1,7 @@
 import { QueueEvents, QueueEventsListener } from "bullmq";
-import { connection, queues } from "../jobs";
-import logger from "../lib/logger";
-import { friendlyName } from "../lib/names";
+import { connection, queues } from "../jobs/index.js";
+import logger from "../lib/logger.js";
+import { friendlyName } from "../lib/names.js";
 import { readFileSync } from "fs";
 
 const events = [

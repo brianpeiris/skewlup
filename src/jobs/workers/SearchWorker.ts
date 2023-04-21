@@ -1,8 +1,8 @@
 import { Worker } from "bullmq";
-import connection from "../connection";
-import { search } from "../../lib/search";
-import { queues } from "../index";
-import logger from "../../lib/logger";
+import connection from "../connection.js";
+import { search } from "../../lib/search.js";
+import { queues } from "../index.js";
+import logger from "../../lib/logger.js";
 
 export default new Worker(
   "search",

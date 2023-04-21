@@ -33,7 +33,7 @@ export default function App({ children }) {
     <main>
       <h1>
         <a href="/">
-          <img className="logo" src="/logo.svg" />
+          <img className="logo" src="/api/static/logo.svg" />
           Skwelup
         </a>
       </h1>

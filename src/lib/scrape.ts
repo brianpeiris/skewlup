@@ -1,10 +1,11 @@
 import puppeteer from "puppeteer";
-import logger from "./logger";
+import logger from "./logger.js";
 import { createWriteStream, mkdirSync } from "fs";
 import { randomUUID } from "crypto";
 import * as stream from "stream";
 import { ReadableStream } from "stream/web";
-import * as jimp from "jimp";
+import jimp from "jimp";
+import { ReadableStreamWithFileType, fileTypeStream } from "file-type";
 
 export async function getText(url: string) {
   logger.debug("Getting page text");
@@ -42,11 +43,14 @@ export async function saveThumbnail(url: string) {
   let thumbnailExtension: string;
 
   if (thumbnailSourceUrl) {
+    logger.debug(`Got og image ${thumbnailSourceUrl}`);
     const response = await fetch(thumbnailSourceUrl);
-    thumbnailStream = stream.Readable.fromWeb(
-      response.body as ReadableStream<any>
+    thumbnailStream = await fileTypeStream(
+      stream.Readable.fromWeb(response.body as ReadableStream<any>)
     );
-    thumbnailExtension = response.headers.get("content-type").split("/")[1];
+    thumbnailExtension = (thumbnailStream as ReadableStreamWithFileType)
+      .fileType.ext;
+    logger.debug(`Got og image extension ${thumbnailExtension}`);
   } else {
     thumbnailStream = stream.Readable.from(
       await page.screenshot({ type: "jpeg" })
@@ -66,7 +70,11 @@ export async function saveThumbnail(url: string) {
   return thumbnailUrl;
 }
 
-async function saveThumbnailStream(thumbnailStream, thumbnailExtension) {
+async function saveThumbnailStream(
+  thumbnailStream: stream.Readable,
+  thumbnailExtension: string
+) {
+  logger.debug("saving thumbnail stream");
   const thumbnailUuid = randomUUID();
   const uuidA = thumbnailUuid.slice(0, 2);
   const uuidB = thumbnailUuid.slice(2, 4);
@@ -75,6 +83,8 @@ async function saveThumbnailStream(thumbnailStream, thumbnailExtension) {
   mkdirSync(thumbnailDirectory, { recursive: true });
   const thumbnailPath = `${thumbnailDirectory}/${thumbnailUuid}.${thumbnailExtension}`;
 
+  logger.debug(thumbnailPath);
+
   const writeStream = createWriteStream(thumbnailPath);
   const writeFinish = new Promise((resolve) =>
     writeStream.on("finish", resolve)
@@ -82,10 +92,14 @@ async function saveThumbnailStream(thumbnailStream, thumbnailExtension) {
   thumbnailStream.pipe(writeStream);
   await writeFinish;
 
+  logger.debug("reading thumbnail");
   const image = await jimp.read(thumbnailPath);
+
+  logger.debug("resizing thumbnail");
   await new Promise((resolve) =>
     image.scaleToFit(400, 300).write(thumbnailPath, resolve)
   );
+  logger.debug("saved thumbnail stream");
 
   return thumbnailPath;
 }

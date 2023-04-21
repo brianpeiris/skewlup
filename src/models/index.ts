@@ -1,7 +1,7 @@
-import City from "./City";
-import Country from "./Country";
-import Resource from "./Resource";
-import Tag from "./Tag";
+import City from "./City.js";
+import Country from "./Country.js";
+import Resource from "./Resource.js";
+import Tag from "./Tag.js";
 
 Country.hasMany(City);
 City.belongsTo(Country);
