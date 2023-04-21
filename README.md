@@ -2,6 +2,8 @@
 
 [Skewlup](https://skewlup.org) is a GPT experiment that aims to provide a directory of local resources for cities around the world.
 
+![Screenshot from 2023-04-21 13-46-17](https://user-images.githubusercontent.com/79419/233701758-883f7512-d3d9-4cdf-85db-f181b5ef17b2.png)
+
 ## How it works
 
 Content for Skewlup is produced with the following workflow:
