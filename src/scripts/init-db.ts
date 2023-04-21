@@ -1,5 +1,5 @@
-import sequelize from "../lib/db";
-import models from "../models/index";
+import sequelize from "../lib/db.js";
+import models from "../models/index.js";
 
 console.log(models);
 

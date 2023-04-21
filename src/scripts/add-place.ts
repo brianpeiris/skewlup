@@ -1,4 +1,4 @@
-import models from "../models/index";
+import models from "../models/index.js";
 
 const countryName = process.argv[2];
 const cityName = process.argv[3];
