@@ -1,4 +1,5 @@
 import { readFileSync } from "fs";
+import { NextApiResponse, NextApiRequest } from "next";
 
 const mimeFromExtension = {
   jpeg: "image/jpeg",
@@ -7,9 +8,12 @@ const mimeFromExtension = {
   svg: "image/svg+xml",
 };
 
-export default async function handler(req, res) {
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   const { paths } = req.query;
-  const file = paths.join("/");
+  const file = (paths as string[]).join("/");
   const extension = file.split(".").pop();
   const buffer = readFileSync(`./public/${file}`);
   res.setHeader("content-type", mimeFromExtension[extension]);
