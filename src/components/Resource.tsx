@@ -44,6 +44,7 @@ export default function Resource({ resource }: { resource: ResourceView }) {
           word-break: break-all;
         }
         .tags {
+          flex-wrap: wrap;
           margin-top: 10px;
           display: flex;
           gap: 5px;
