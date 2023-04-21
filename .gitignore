@@ -1,7 +1,6 @@
-build
+build/
 node_modules/
 .env
-db.sqlite
 .next/
 next-env.d.ts
 .pnpm-store/
