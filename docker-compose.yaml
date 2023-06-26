@@ -2,12 +2,6 @@ services:
   redis:
     image: redis:7
 
-  postgres:
-    environment:
-      - POSTGRES_DB=skewlup
-      - POSTGRES_PASSWORD=${DB_PASSWORD}
-    image: postgres:15
-
   app:
     build: .
     volumes:

@@ -23,6 +23,7 @@ Required OpenAI and Bing API keys and configurations are specified in the `.env`
 
 ```console
 docker compose up
+./scripts/docker-compose-dev.sh
 ./scripts/run.sh init-db
 ./scripts/run.sh add-place brazil sao-paulo
 ./scripts/run.sh job-runner brazil sao-paulo math lessons

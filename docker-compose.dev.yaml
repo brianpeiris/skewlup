@@ -1,0 +1,6 @@
+services:
+  postgres:
+    environment:
+      - POSTGRES_DB=skewlup
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+    image: postgres:14.7
